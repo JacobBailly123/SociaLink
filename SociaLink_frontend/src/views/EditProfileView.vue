@@ -67,7 +67,8 @@ export default {
         return {
             form: {
                 email: this.userStore.user.email,
-                name: this.userStore.user.name
+                name: this.userStore.user.name,
+                
             },
             errors: [],
         }
