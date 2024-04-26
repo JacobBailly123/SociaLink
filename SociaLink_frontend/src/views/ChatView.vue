@@ -10,11 +10,12 @@
                         v-on:click="setActiveConversation(conversation.id)"
                     >
                         <div class="flex items-center space-x-2">
+                            <img :src="user.get_avatar" class="w-[20px] rounded-full">
                             <template
                                 v-for="user in conversation.users"
                                 v-bind:key="user.id"
                             >
-                                <img :src="user.get_avatar" class="w-[40px] rounded-full">
+                               
 
                                 <p 
                                     class="text-xs font-bold"

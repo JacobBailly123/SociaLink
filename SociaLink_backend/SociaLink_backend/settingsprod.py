@@ -14,9 +14,9 @@ SECRET_KEY = 'django-insecure-v*=4ctfyl&pe37%c8rs7oa4hoj3h_4w--q9nxw1j=ebd%91865
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['api.SociaLink.com']
+ALLOWED_HOSTS = []
 
-WEBSITE_URL = 'http://api.SociaLink.com'
+WEBSITE_URL = 'http://127.0.0.1:8000'
 
 
 # Application definition
@@ -41,11 +41,11 @@ REST_FRAMEWORK = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    "http://SociaLink.com",
+    "http://localhost:5173",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://SociaLink.com",
+    "http://localhost:5173",
 ]
 
 INSTALLED_APPS = [

@@ -3,8 +3,8 @@
         <div class="main-center col-span-3 space-y-4">
             <div 
                 class="p-4 bg-white border border-gray-200 rounded-lg"
-                v-for="notification in notifications"
-                v-bind:key="notification.id"
+                v-for="notification in sortedNotifications"
+                :key="notification.id"
                 v-if="notifications.length"
             >
                 {{ notification.body }} 
@@ -31,6 +31,13 @@ export default {
     data() {
         return {
             notifications: []
+        }
+    },
+
+    computed: {
+        sortedNotifications() {
+            // Sort notifications by timestamp in descending order
+            return this.notifications.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
         }
     },
 
