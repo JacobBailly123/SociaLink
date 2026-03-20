@@ -1,1 +1,1 @@
-web: gunicorn SociaLink_backend.wsgi:application --settings=SociaLink_backend.settingsprod
+web: DJANGO_SETTINGS_MODULE=SociaLink_backend.settingsprod gunicorn SociaLink_backend.wsgi:application
