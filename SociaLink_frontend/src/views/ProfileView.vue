@@ -154,7 +154,7 @@ export default {
                 .then(response => {
                     console.log(response.data)
 
-                    this.$router.push('/chat')
+                    this.$router.push(`/chat/${response.data.id}`)
                 })
                 .catch(error => {
                     console.log('error', error)

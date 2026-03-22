@@ -109,8 +109,13 @@ export default {
     },
 
     mounted() {
-        this.getConversations()
-    },
+    this.getConversations()
+    
+    if (this.$route.params.id) {
+        this.activeConversation = this.$route.params.id
+        this.getMessages()
+    }
+},
     
     methods: {
         setActiveConversation(id) {

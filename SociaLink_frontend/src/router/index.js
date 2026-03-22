@@ -42,10 +42,10 @@ const router = createRouter({
       component: SearchView
     },
     {
-      path: '/chat',
-      name: 'chat',
-      component: ChatView
-    },
+    path: '/chat/:id?',
+    name: 'chat',
+    component: ChatView
+},
     {
       path: '/notifications',
       name: 'notifications',
