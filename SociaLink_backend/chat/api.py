@@ -10,7 +10,7 @@ from .serializers import ConversationSerializer, ConversationDetailSerializer, C
 
 @api_view(['GET'])
 def conversation_list(request):
-    conversations = Conversation.objects.filter(users__in=list([request.user]))
+    conversations = Conversation.objects.filter(users__in=list([request.user])).order_by('-modified_at')
     serializer = ConversationSerializer(conversations, many=True)
 
     return JsonResponse(serializer.data, safe=False)
