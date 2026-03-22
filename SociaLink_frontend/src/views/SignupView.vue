@@ -104,7 +104,8 @@ export default {
                     .post('/api/signup/', this.form)
                     .then(response => {
                         if (response.data.message === 'success') {
-                            this.toastStore.showToast(5000, 'The user is registered. Please activate your account by clicking your email link.', 'bg-emerald-500')
+                            this.toastStore.showToast(5000, 'Account created successfully! Please log in.', 'bg-emerald-500')
+                            this.$router.push('/login')
 
                             this.form.email = ''
                             this.form.name = ''
