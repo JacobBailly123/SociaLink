@@ -10,17 +10,14 @@
                         v-on:click="setActiveConversation(conversation.id)"
                     >
                         <div class="flex items-center space-x-2">
-                            <img :src="user.get_avatar" class="w-[20px] rounded-full">
                             <template
                                 v-for="user in conversation.users"
                                 v-bind:key="user.id"
                             >
-                               
-
-                                <p 
-                                    class="text-xs font-bold"
-                                    v-if="user.id !== userStore.user.id"
-                                >{{ user.name }}</p>
+                                <template v-if="user.id !== userStore.user.id">
+                                    <img :src="user.get_avatar" class="w-[20px] rounded-full">
+                                    <p class="text-xs font-bold">{{ user.name }}</p>
+                                </template>
                             </template>
                         </div>
 
@@ -34,6 +31,7 @@
             <div class="bg-white border border-gray-200 rounded-lg">
                 <div class="flex flex-col flex-grow p-4">
                     <template
+                        v-if="activeConversation.messages"
                         v-for="message in activeConversation.messages"
                         v-bind:key="message.id"
                     >
@@ -67,10 +65,12 @@
                             </div>
                         </div>
                     </template>
+
+                    <p v-else class="text-sm text-gray-500 text-center p-4">No messages yet. Say hello!</p>
                 </div>
             </div>
 
-            <div class="bg-white border border-gray-200 rounded-lg">
+            <div class="bg-white border border-gray-200 rounded-lg" v-if="activeConversation.id">
                 <form v-on:submit.prevent="submitForm">
                     <div class="p-4">  
                         <textarea v-model="body" class="p-4 w-full bg-gray-100 rounded-lg" placeholder="What do you want to say?"></textarea>
@@ -109,35 +109,29 @@ export default {
     },
 
     mounted() {
-    this.getConversations()
-    
-    if (this.$route.params.id) {
-        this.activeConversation = this.$route.params.id
-        this.getMessages()
-    }
-},
+        if (this.$route.params.id) {
+            this.activeConversation = this.$route.params.id
+            this.getMessages()
+        }
+        this.getConversations()
+    },
     
     methods: {
         setActiveConversation(id) {
-            console.log('setActiveConversation', id)
-
             this.activeConversation = id
             this.getMessages()
         },
-        getConversations() {
-            console.log('getConversations')
 
+        getConversations() {
             axios
                 .get('/api/chat/')
                 .then(response => {
-                    console.log(response.data)
-
                     this.conversations = response.data
 
-                    if (this.conversations.length) {
-    this.activeConversation = this.conversations[0].id
-    this.getMessages()
-}
+                    if (this.conversations.length && !this.$route.params.id) {
+                        this.activeConversation = this.conversations[0].id
+                        this.getMessages()
+                    }
                 })
                 .catch(error => {
                     console.log(error)
@@ -145,13 +139,9 @@ export default {
         },
 
         getMessages() {
-            console.log('getMessages')
-
             axios
                 .get(`/api/chat/${this.activeConversation}/`)
                 .then(response => {
-                    console.log(response.data)
-
                     this.activeConversation = response.data
                 })
                 .catch(error => {
@@ -160,16 +150,13 @@ export default {
         },
 
         submitForm() {
-            console.log('submitForm', this.body)
-
             axios
                 .post(`/api/chat/${this.activeConversation.id}/send/`, {
                     body: this.body
                 })
                 .then(response => {
-                    console.log(response.data)
-
                     this.activeConversation.messages.push(response.data)
+                    this.body = ''
                 })
                 .catch(error => {
                     console.log(error)
