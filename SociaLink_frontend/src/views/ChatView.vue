@@ -130,10 +130,9 @@ export default {
                     this.conversations = response.data
 
                     if (this.conversations.length) {
-                        this.activeConversation = this.conversations[0].id
-                    }
-
-                    this.getMessages()
+    this.activeConversation = this.conversations[0].id
+    this.getMessages()
+}
                 })
                 .catch(error => {
                     console.log(error)
